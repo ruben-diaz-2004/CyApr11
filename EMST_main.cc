@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
   input_TM >> points;
 
   point_set arbol(points);
-
+  arbol.EMST();
   arbol.write_tree(output_tape);
 
 
