@@ -12,13 +12,13 @@ CXXFLAGS = -Wall -std=c++17 -g
 
 
 
-all: TuringMachine
+all: EMST
 
-TuringMachine: TM_main.cc tupla.cc turingmachine.cc
+EMST: EMST_main.cc point_set.cc point_types.cc sub_tree.cc
 		$(CXX) $(CXXFLAGS) -o $@ $^
 	
 
 	
 .PHONY: all clean
 clean:
-		rm -f TuringMachine
+		rm -f EMST

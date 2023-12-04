@@ -14,8 +14,8 @@
 #include <fstream>
 #include "parameters.cc"
 #include "point_set.h"
-
-
+#include <sstream>
+#include <string>
 
 int main(int argc, char *argv[]) {
   CheckCorrectParameters(argc, argv, 3);
@@ -23,18 +23,23 @@ int main(int argc, char *argv[]) {
   std::ifstream input_TM{argv[1]};
   std::ofstream output_tape{argv[2]};
 
+  std::string line;
+  std::stringstream ss;
+
+  while (std::getline(input_TM, line)) {
+    if (line[0] != '#') {
+      ss << line << std::endl;
+    }
+  }
+
 
   CyA::point_vector points;
-  input_TM >> points;
+  ss >> points;
 
   point_set arbol(points);
   arbol.EMST();
-  arbol.write_tree(output_tape);
-
-
-
-
-
+  // arbol.write_tree(output_tape);
+  arbol.write(output_tape);
 
   return 0;
 }

@@ -26,6 +26,7 @@ typedef std::vector<EMST::sub_tree> forest;
     inline const CyA::tree& get_tree(void) const { return emst_; }
     inline const CyA::point_vector& get_points(void) const { return *this; }
     inline const double get_cost(void) const { return compute_cost(); }
+    void point_find(const CyA::point &p, int &i) const;
 
   private:
     void compute_arc_vector(CyA::arc_vector &av) const;
