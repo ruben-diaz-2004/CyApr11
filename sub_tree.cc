@@ -1,3 +1,15 @@
+/**
+  * Universidad de La Laguna
+  * Escuela Superior de Ingeniería y Tecnología
+  * Grado en Ingeniería Informática
+  * Computabilidad y Algoritmia 2023-2024
+  *
+  * @author Rubén Díaz Marrero 
+  * @date 04/12/2023
+  * @brief Este programa obtiene el Euclidean minimum spanning tree (EMST)
+  *  de un conjunto de puntos en dos dimensiones (2D)
+  */
+
 #include <iomanip>
 #include <cmath>
 
@@ -8,6 +20,7 @@
 
 namespace EMST
 {
+    // constructor por defecto
     sub_tree::sub_tree(void) : arcs_(),
                                points_(),
                                cost_(0)
@@ -15,6 +28,7 @@ namespace EMST
     {
     }
 
+    // constructor con un punto
     sub_tree::sub_tree(const CyA::point &p) : arcs_(),
                                               points_(),
                                               cost_(0)
@@ -22,6 +36,7 @@ namespace EMST
         points_.insert(p);
     }
 
+    // constructor de copia
     sub_tree::sub_tree(const sub_tree &st) : arcs_(st.arcs_),
                                              points_(st.points_),
                                              cost_(st.cost_)

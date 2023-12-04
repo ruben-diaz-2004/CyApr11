@@ -1,3 +1,15 @@
+/**
+  * Universidad de La Laguna
+  * Escuela Superior de Ingeniería y Tecnología
+  * Grado en Ingeniería Informática
+  * Computabilidad y Algoritmia 2023-2024
+  *
+  * @author Rubén Díaz Marrero 
+  * @date 04/12/2023
+  * @brief Este programa obtiene el Euclidean minimum spanning tree (EMST)
+  *  de un conjunto de puntos en dos dimensiones (2D)
+  */
+
 #pragma once
 
 #include <iostream>
