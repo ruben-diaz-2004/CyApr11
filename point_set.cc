@@ -35,33 +35,47 @@ void point_set::compute_arc_vector(CyA::arc_vector &av) const {
  * @brief método para encontrar los subárboles incidentes
 */
 void point_set::find_incident_subtrees(const forest& st, const CyA::arc &a, int& i, int& j) const {
-  i = 0;
-  j = 0;
-  bool encontrado = false;
-  while (i < st.size() && !encontrado) {
-    j = 0;
-    while (j < st[i].get_arcs().size() && !encontrado) {
-      if (st[i].get_arcs()[j].second == a.first) {
-        encontrado = true;
-      }
-      else {
-        j++;
-      }
+  i = j = -1; 
+
+  for (int index = 0; index < st.size(); ++index) {
+    const EMST::sub_tree& subtree = st[index];
+    if (subtree.contains(a.first)) {
+      i = index; // Found subtree containing the first point of the arc
     }
-    if (!encontrado) {
-      i++;
+    if (subtree.contains(a.second)) {
+      j = index; // Found subtree containing the second point of the arc
+    }
+
+    // If both incident subtrees are found, break the loop
+    if (i != -1 && j != -1) {
+      break;
     }
   }
 }
 
 
 void point_set::merge_subtrees(forest& st, const CyA::arc &a, int i, int j) const {
+  const EMST::sub_tree& subtree_i = st[i];
+  const EMST::sub_tree& subtree_j = st[j];
 
+  const double cost = euclidean_distance(a);
+
+  EMST::sub_tree subtree(subtree_i);
+  subtree.merge(subtree_j, std::make_pair(cost, a));
+
+  st.erase(st.begin() + j);
+  st[i] = subtree;
 }
 
 
 double point_set::compute_cost(void) const {
-
+  double cost = 0;
+ 
+  for (const CyA::arc &a : emst_) {
+    cost += euclidean_distance(a);
+  }
+ 
+  return cost;
 }
 
 

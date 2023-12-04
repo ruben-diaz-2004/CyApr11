@@ -11,6 +11,7 @@ namespace EMST
     public:
         sub_tree(void);
         sub_tree(const CyA::point &p);
+        sub_tree(const sub_tree &st);
         ~sub_tree(void);
 
         void add_arc(const CyA::arc &a);

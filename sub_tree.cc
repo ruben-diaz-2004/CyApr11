@@ -22,6 +22,12 @@ namespace EMST
         points_.insert(p);
     }
 
+    sub_tree::sub_tree(const sub_tree &st) : arcs_(st.arcs_),
+                                             points_(st.points_),
+                                             cost_(st.cost_)
+    {
+    }
+
     sub_tree::~sub_tree(void)
     {
     }
