@@ -14,8 +14,8 @@ typedef std::vector<EMST::sub_tree> forest;
 
   public:
     // point_set(const CyA::point_vector &points);
-    // point_set(const CyA::point_vector &points) : CyA::point_vector(points), emst_() {}
-    point_set(const CyA::point_vector &points, CyA::arc_vector &av);
+    point_set(const CyA::point_vector &points) : CyA::point_vector(points), emst_() {}
+
     ~point_set(void);
 
     void EMST(void);

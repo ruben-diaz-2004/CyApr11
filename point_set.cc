@@ -5,9 +5,6 @@
 #include "point_set.h"
 
 
-point_set::point_set(const CyA::point_vector &points, CyA::arc_vector &av) : CyA::point_vector(points), emst_() {
-  compute_arc_vector(av);
-}
 
 /**
  * @brief método para calcular los costes entre cada par de puntos
@@ -34,8 +31,27 @@ void point_set::compute_arc_vector(CyA::arc_vector &av) const {
 }
 
 
+/**
+ * @brief método para encontrar los subárboles incidentes
+*/
 void point_set::find_incident_subtrees(const forest& st, const CyA::arc &a, int& i, int& j) const {
-
+  i = 0;
+  j = 0;
+  bool encontrado = false;
+  while (i < st.size() && !encontrado) {
+    j = 0;
+    while (j < st[i].get_arcs().size() && !encontrado) {
+      if (st[i].get_arcs()[j].second == a.first) {
+        encontrado = true;
+      }
+      else {
+        j++;
+      }
+    }
+    if (!encontrado) {
+      i++;
+    }
+  }
 }
 
 
@@ -58,11 +74,36 @@ double point_set::euclidean_distance(const CyA::arc& a) const {
 
 
 void point_set::EMST(void) {
+  forest bosque_F;
+  for (int i = 0; i < size(); i++) {
+    bosque_F.push_back(EMST::sub_tree((*this)[i]));
+  }
+
+  CyA::arc_vector aristas_S;
+  compute_arc_vector(aristas_S);
+
+  while (!aristas_S.empty() && bosque_F.size() != 1) {
+    CyA::arc arista_minima = aristas_S[0].second;
+    aristas_S.erase(aristas_S.begin());
+    int i = 0;
+    int j = 0;
+    find_incident_subtrees(bosque_F, arista_minima, i, j);
+    if (i != j) {
+      merge_subtrees(bosque_F, arista_minima, i, j);
+    }
+  }
+
+  emst_ = bosque_F[0].get_arcs();
 
 }
 
 
 void point_set::write_tree(std::ostream &os) const {
+  os << emst_.size() << std::endl;
+ 
+  for (const CyA::arc &a : emst_) {
+    os << a.first << "\t" << a.second << std::endl;
+  }
 }
 
 
